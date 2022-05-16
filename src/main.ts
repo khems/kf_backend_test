@@ -1,11 +1,12 @@
 import "dotenv/config";
 import { fetchOutages, fetchSiteInfo, postSiteOutages } from "./api/api";
-import { makeEnhancedOutages } from "./enhanceOutages";
+import { processOutages } from "./processOutages";
 import { EnhancedOutage } from "./types";
 
 const SITE_NAME: string = "norwich-pear-tree";
+const FILTER_DATE = "2022-01-01T00:00:00.000Z";
 
-const main = async (siteName: string) => {
+const main = async (siteName: string, filterDate: string) => {
   const outages = await fetchOutages();
   if (outages instanceof Error) {
     console.error(`Failed to fetch outages: ${outages.message}`);
@@ -20,11 +21,9 @@ const main = async (siteName: string) => {
     return;
   }
 
-  const filterDate = new Date("2022-01-01T00:00:00.000Z");
-
-  const enhancedOutages: EnhancedOutage[] = makeEnhancedOutages(
+  const enhancedOutages: EnhancedOutage[] = processOutages(
     outages,
-    filterDate,
+    new Date(filterDate),
     site
   );
 
@@ -37,4 +36,4 @@ const main = async (siteName: string) => {
   }
 };
 
-console.dir(main(SITE_NAME));
+console.dir(main(SITE_NAME, FILTER_DATE));

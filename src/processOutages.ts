@@ -1,6 +1,6 @@
 import { Outage, Device, DeviceId, SiteInfo } from "./types";
 
-const makeEnhancedOutages = (
+const processOutages = (
   outages: Outage[],
   filterDate: Date,
   site: SiteInfo
@@ -30,4 +30,4 @@ const makeEnhancedOutages = (
   );
 };
 
-export { makeEnhancedOutages };
+export { processOutages };
