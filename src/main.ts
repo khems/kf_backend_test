@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { fetchOutages, fetchSiteInfo, postSiteOutages } from "./api/api";
-import { Outage, Device, DeviceId, EnhancedOutage, SiteInfo } from "./types";
+import { makeEnhancedOutages } from "./enhanceOutages";
+import { EnhancedOutage } from "./types";
 
 const SITE_NAME: string = "norwich-pear-tree";
 
@@ -10,6 +11,7 @@ const main = async (siteName: string) => {
     console.error(`Failed to fetch outages: ${outages.message}`);
     return;
   }
+
   const site = await fetchSiteInfo(siteName);
   if (site instanceof Error) {
     console.error(
@@ -35,36 +37,4 @@ const main = async (siteName: string) => {
   }
 };
 
-const makeEnhancedOutages = (
-  outages: Outage[],
-  filterDate: Date,
-  site: SiteInfo
-) => {
-  const devicesOnSite: DeviceId[] = site.devices.map(
-    (device: Device) => device.id
-  );
-  return (
-    outages
-      // filter outages before the "filterDate"
-      .filter((outage: Outage) => {
-        return new Date(outage.begin) >= filterDate;
-      })
-      //Filter out outages that don't have an ID. I seperated these for readability
-      .filter((outage: Outage) => {
-        return devicesOnSite.includes(outage.id); // TODO: change id to deviceId
-      })
-      .map((outage: Outage) => {
-        const device = site.devices.find(
-          (device: Device) => device.id === outage.id
-        );
-        return {
-          ...outage,
-          name: device ? device.name : "Unknown Device", //Unknown Device should never happen
-        };
-      })
-  );
-};
-
 console.dir(main(SITE_NAME));
-
-export { makeEnhancedOutages };

@@ -1,4 +1,4 @@
-import { makeEnhancedOutages } from "./main";
+import { makeEnhancedOutages } from "./enhanceOutages";
 import {
   MOCK_ENHANCED_OUTAGES,
   MOCK_OUTAGES,
