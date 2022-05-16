@@ -1,10 +1,18 @@
-import { Outage, Device, DeviceId, SiteInfo } from "./types";
+import { Outage, Device, DeviceId, SiteInfo, EnhancedOutage } from "./types";
 
+/**
+ * Filters out outages that begin before given filterDate or that don't have an ID that's in
+ * the list of devices in the site. Attaches the name of the device to the appropriate outage.
+ * @param outages
+ * @param filterDate
+ * @param site
+ * @returns Array of EnhancedOutages
+ */
 const processOutages = (
   outages: Outage[],
   filterDate: Date,
   site: SiteInfo
-) => {
+): EnhancedOutage[] => {
   const devicesOnSite: DeviceId[] = site.devices.map(
     (device: Device) => device.id
   );
