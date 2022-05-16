@@ -1,0 +1,7 @@
+.vscode
+.yarn
+.api-key.txt
+.env
+dist
+challenge
+node_modules
