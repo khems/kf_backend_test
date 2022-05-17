@@ -12,7 +12,7 @@ All of the requirements are satisfied, all errors are handled.
 
 ### Setup
 
-Set envaironment variables for API_KEY and BASE_PATH. For local development make a `.env` file in the root of the project similar to the one below.
+Set environment variables for API_KEY and BASE_PATH. For local development make a `.env` file in the root of the project similar to the one below.
 
 ```
 API_KEY="AAAAAAAAAAAAAAAAAA111111111111111"
