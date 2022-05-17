@@ -22,7 +22,9 @@ BASE_PATH="https://api.krakenflex.systems/api-address"
 Install the dependencies by running
 
 ```
-npm install
+nvm install
+npm install -g npm@8.8.0
+npm ci
 ```
 
 ### Run
