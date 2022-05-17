@@ -3,20 +3,20 @@ import { fetchOutages, fetchSiteInfo, postSiteOutages } from "./api/api";
 import { processOutages } from "./processOutages";
 import { EnhancedOutage } from "./types";
 
-const SITE_NAME: string = "norwich-pear-tree";
+const SITE_ID = "norwich-pear-tree";
 const FILTER_DATE = "2022-01-01T00:00:00.000Z";
 
-const main = async (siteName: string, filterDate: string) => {
+const main = async (siteId: string, filterDate: string) => {
   const outages = await fetchOutages();
   if (outages instanceof Error) {
     console.error(`Failed to fetch outages: ${outages.message}`);
     return;
   }
 
-  const site = await fetchSiteInfo(siteName);
+  const site = await fetchSiteInfo(siteId);
   if (site instanceof Error) {
     console.error(
-      `Failed to fetch site info for site ${siteName}: ${site.message}`
+      `Failed to fetch site info for site ${siteId}: ${site.message}`
     );
     return;
   }
@@ -27,13 +27,13 @@ const main = async (siteName: string, filterDate: string) => {
     site
   );
 
-  const result = await postSiteOutages(siteName, enhancedOutages);
+  const result = await postSiteOutages(siteId, enhancedOutages);
   if (result instanceof Error) {
     console.error(
-      `Failed to post enhanced site outages for site ${siteName}: ${result.message}`
+      `Failed to post enhanced site outages for site ${siteId}: ${result.message}`
     );
     return;
   }
 };
 
-console.dir(main(SITE_NAME, FILTER_DATE));
+console.dir(main(SITE_ID, FILTER_DATE));
